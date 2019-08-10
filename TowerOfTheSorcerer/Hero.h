@@ -3,26 +3,56 @@
 #include <climits>
 
 class Hero: public Character {
-public:
+private:
 	Hero() {
+	}
+
+	static Hero* hero;
+
+public:
+	static Hero* getInstance() {
+		if (hero == NULL) {
+			hero = new Hero();
+		}
+
+		return hero;
 	}
 
 	~Hero() {
 	}
 
-	bool addAttack(unsigned int point) {
+	void addAttack(unsigned int point) {
 		if (UINT_MAX - point < attack) {
-			return false;
+			attack = UINT_MAX;
 		}
 
 		attack += point;
 	}
 
-	bool addDefence(unsigned int point) {
+	void addDefence(unsigned int point) {
 		if (UINT_MAX - point < defence) {
-			return false;
+			defence = UINT_MAX;
 		}
 
 		defence += point;
+	}
+
+	void updateCoin(unsigned int change, bool plus) {
+		if (plus) {
+			if (UINT_MAX - change < coin) {
+				coin = UINT_MAX;
+			}
+			else {
+				coin += change;
+			}
+		}
+		else {
+			if (coin < change) {
+				coin = 0;
+			}
+			else {
+				coin -= change;
+			}
+		}
 	}
 };
