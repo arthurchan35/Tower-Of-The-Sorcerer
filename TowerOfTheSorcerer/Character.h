@@ -1,52 +1,44 @@
 #include <climits>
-
+#include <string>
 #pragma once
 
 class Character {
+private:
+	Character();
 public:
-	Character() {
-	}
 
-	virtual ~Character() = 0;
+	Character(std::string name);
 
-	unsigned int getHP() {
-		return hp;
-	}
+	std::string getName();
 
-	unsigned int getAttack() {
-		return attack;
-	}
+	virtual ~Character();
 
-	unsigned int getDefence() {
-		return defence;
-	}
+protected:
+	std::string name;
+};
 
-	unsigned int getCoin() {
-		return coin;
-	}
+class FightableCharacter : public Character {
+private:
+	FightableCharacter();
 
-	void updateHP(unsigned int change, bool plus) {
-		if (plus) {
-			if (UINT_MAX - change < hp) {
-				hp = UINT_MAX;
-			}
-			else {
-				hp += change;
-			}
-		}
-		else {
-			if (hp < change) {
-				hp = 0;
-			}
-			else {
-				hp -= change;
-			}
-		}
-	}
+public:
+	using Character::Character;
+
+	virtual ~FightableCharacter();
+
+	unsigned int getHP();
+
+	unsigned int getOffense();
+
+	unsigned int getDefence();
+
+	unsigned int getCoin();
+
+	void updateHP(unsigned int change, bool plus);
 
 protected:
 	unsigned int hp = 0;
-	unsigned int attack = 0;
+	unsigned int Offense = 0;
 	unsigned int defence = 0;
 	unsigned int coin = 0;
 };
